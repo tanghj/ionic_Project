@@ -15,6 +15,7 @@ angular.module('starter.controllers', ['ionic'])
 			"Name":btnNameArr[i]
 		})
 	}
+	//这是Branch1分支
 })
 
 // pageOne
