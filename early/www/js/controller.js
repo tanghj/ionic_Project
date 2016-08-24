@@ -7,7 +7,14 @@ angular.module('starter.controllers', ['ionic'])
 
 // home
 .controller("homeCtrl",function($scope, $state) {
-	
+	$scope.tempItem = [];
+	var btnNameArr = ["App","Photo","Books","Music","Video","Other"];
+	for (var i = 0; i < 6; i++) {
+		$scope.tempItem.push({
+			"index":i,
+			"Name":btnNameArr[i]
+		})
+	}
 })
 
 // pageOne
