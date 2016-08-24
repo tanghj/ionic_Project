@@ -7,7 +7,7 @@ angular.module('starter.controllers', ['ionic'])
 
 // home
 .controller("homeCtrl",function($scope, $state) {
-	
+	//这是master分支
 })
 
 // pageOne
