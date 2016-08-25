@@ -57,16 +57,12 @@ angular.module('starter.controllers', ['ionic'])
 			"subHeaderData": "",
 			"contentData" : ""
 		};
+		$scope.slideIndex = 1;
 	}
 
 	$scope.GetHeaderData = function(){
 		GetData($http,"themes",function(Data){
 	    	$scope.homeData.subHeaderData = Data;
-	    	/*for (var i = 0; i < $scope.homeData.subHeaderData.others.length; i++) {
-	    		console.log($scope.homeData.subHeaderData.others[i]);
-
-	    	}*/
-
 	    	$scope.homeData.subHeaderData.others.unshift({
     			"name":"今日日报",
     			"id":"Today"
@@ -93,7 +89,6 @@ angular.module('starter.controllers', ['ionic'])
 	}
 
 	$scope.selectedType = function(list){
-
 		if (list.id == "Today") {
 			$scope.GetContentData();
 		}else{
@@ -106,6 +101,51 @@ angular.module('starter.controllers', ['ionic'])
 	    	});
 		}
 	}
+
+	$scope.changedFun = function(index){
+		var NowDate = new Date();
+		var TempDate = new Date($scope.homeData.contentData.date);
+
+
+		/*if(NowDate.getTime() > TempDate.getTime()){
+	        console.log('NowDate大');
+	    } else {
+	        console.log("已经是最新数据了。");
+	    }*/
+
+
+
+
+	   
+
+	    /*if (index == 3 || index == 4) {
+	    	console.log("向右->");
+	    }else if (index == 1 || index == 0) {
+	    	console.log("<-向左");
+	    }else{
+	    	console.log("<-向左");
+	    }*/
+
+	    //console.log(index);
+		/*GetData($http,"news/before/20131119",function(Data){
+			console.log(Data);
+			$scope.homeData.contentData = Data;
+	    	for (var i = 0; i < $scope.homeData.contentData.stories.length; i++) {
+				$scope.homeData.contentData.stories[i].index = i;
+			}
+			$scope.$apply();
+	    });*/
+
+	}
+  	
+
+  	$scope.onDragRight = function(){
+  		console.log("右边");
+  	}
+
+  	$scope.onDragLeft = function(){
+  		console.log("左边");
+  	}
 
 
   	$scope.setData();

@@ -29,20 +29,17 @@
       </ion-scroll>
       <div style="position: relative;top:-1.5rem;left:-0.4rem;width: 150%;height: 1rem; background: #FFF;z-index:1;-webkit-box-shadow:3px 3px 3px #C0C0C0;-moz-box-shadow:3px 3px 3px #C0C0C0;box-shadow:3px 3px 3px #C0C0C0;"></div>
   </div>
-    <!-- <ion-content class="has-header">
-  			<div style="position: relative;top: 5rem; height: 10%;width: 100%; border: solid 0px #FFF;" ng-repeat="item in homeData.contentData.stories" >
-          <div ng-if="item.index % 2 == 0" style="position: absolute; top: 20%; right: 0%; width: 84%; height: 70%; border: solid 1px #C0C0C0;-webkit-box-shadow:3px 3px 3px #C0C0C0;-moz-box-shadow:3px 3px 3px #C0C0C0;box-shadow:3px 3px 3px #C0C0C0;">
-            <p style="position: absolute; left: 0%; width: 80%;height: 50%;text-align:left;">{{item.title}}</p>
-          </div>
-          <div ng-if="item.index % 2 != 0" style="position: absolute; top: 20%; left: 0%; width: 84%; height: 70%; border: solid 1px #C0C0C0;-webkit-box-shadow:3px 3px 3px #C0C0C0;-moz-box-shadow:3px 3px 3px #C0C0C0;box-shadow:3px 3px 3px #C0C0C0;">
-            <p style="position: absolute; right: 0%; width: 80%;height: 50%;text-align:left;">{{item.title}}</p>
-          </div>
-    </ion-content> -->
-    <ion-scroll  class="has-header" style=" position: absolute;
-                                            top: 7.5rem; 
-                                                  width:100%;
-                                                  height:84%;
-                                                  background: #FFF;">
+
+    <ion-slide-box show-pager="false">
+    <ion-slide>
+      <ion-scroll  class="has-header" style=" position: absolute;
+                                                top: 7rem; 
+                                                width:100%;
+                                                height:83%;
+                                                background: #FFF;" on-drag-right="onDragRight()" on-drag-left="onDragLeft()">
+        <div style="width: 100%;height: 40px;">
+          <p style="position: relative; top: 20px;text-align:center;"><strong>{{homeData.contentData.date}}</strong></p>
+        </div>
         <div style="position: relative;top: 0rem; height: 10%;width: 100%; border: solid 0px #FFF;" ng-repeat="item in homeData.contentData.stories" >
         <div ng-if="item.index % 2 == 0" style="position: absolute; top: 20%; right: 0%; width: 84%; height: 70%; border: solid 1px #C0C0C0;-webkit-box-shadow:3px 3px 3px #C0C0C0;-moz-box-shadow:3px 3px 3px #C0C0C0;box-shadow:3px 3px 3px #C0C0C0;">
           <p style="position: absolute; left: 0%; width: 80%;height: 50%;text-align:left;">{{item.title}}</p>
@@ -51,7 +48,10 @@
           <p style="position: absolute; right: 0%; width: 80%;height: 50%;text-align:left;">{{item.title}}</p>
         </div>
         </div>
-    </ion-scroll>
+      </ion-scroll>
+    </ion-slide>
+    </ion-slide-box>
+    
 
 
 </ion-view>
