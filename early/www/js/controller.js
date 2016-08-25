@@ -14,42 +14,103 @@ angular.module('starter.controllers', ['ionic'])
 .controller("homeCtrl",function($scope,$state,$http) {
 
 	//这是合并分支
-	$scope.setData = function(){
-		$scope.homeData = {};
+	/*$scope.setData = function(){
+		$scope.homeData = {
+			"contentData" : "",
+			"subHeaderData": ""
+		};
+
 	    GetData($http,"news/latest",function(Data){
-	    	$scope.homeData = Data;
+	    	$scope.homeData.contentData = Data;
 	    });
+
+	    setTimeout(function() {
+	    	GetData($http,"themes",function(Data){
+		    	$scope.homeData.subHeaderData = Data;
+		    });
+	    }, 500);
+
+	    
+
 	}
 	$scope.pageDealWith = function(){
-		for (var i = 0; i < $scope.homeData.stories.length; i++) {
-			$scope.homeData.stories[i].index = i;
+		console.log($scope.homeData);
+		for (var i = 0; i < $scope.homeData.contentData.stories.length; i++) {
+			$scope.homeData.contentData.stories[i].index = i;
 		}
-		console.log($scope.homeData.stories);
 	}
 
+	$scope.selectedType = function(list){
+		GetData($http,"theme/" + list.id,function(Data){
+			$scope.homeData.contentData = Data;
+	    });
+	    $scope.pageDealWith();
+	}
+
+
 	$scope.setData();
-	setTimeout(function() {$scope.pageDealWith();}, 500);
+	setTimeout(function() {$scope.pageDealWith();}, 500);*/
 
 
-  	//方案一
-  	//出现问题：SyntaxError: missing ; before statement
-  	/*var mydata = {};
-	$http.jsonp("http://news-at.zhihu.com/api/4/news/latest")
-	.success(function(data){
-		mydata = data;
-		console.log(mydata);
-	});*/
-	
-	//方案二
-	//出现问题：跨域
-	/*var url = "http://news-at.zhihu.com/api/4/news/latest";
-    $http.get(url)
-        .then(function(mycallback){
-            $scope.md = mycallback;
-            var mydata = mycallback.data; 
-            console.log(mydata);            
-    });*/
+	$scope.setData = function(){
+		$scope.homeData = {
+			"subHeaderData": "",
+			"contentData" : ""
+		};
+	}
 
+	$scope.GetHeaderData = function(){
+		GetData($http,"themes",function(Data){
+	    	$scope.homeData.subHeaderData = Data;
+	    	/*for (var i = 0; i < $scope.homeData.subHeaderData.others.length; i++) {
+	    		console.log($scope.homeData.subHeaderData.others[i]);
+
+	    	}*/
+
+	    	$scope.homeData.subHeaderData.others.unshift({
+    			"name":"今日日报",
+    			"id":"Today"
+    		})
+	    });
+	}
+
+	$scope.GetContentData = function(){
+		GetData($http,"news/latest",function(Data){
+	    	$scope.homeData.contentData = Data;
+	    	for (var i = 0; i < $scope.homeData.contentData.stories.length; i++) {
+				$scope.homeData.contentData.stories[i].index = i;
+			}
+			$scope.$apply();
+	    });
+	}
+  	
+
+	$scope.selectedType = function(list){
+		GetData($http,"theme/" + list.id,function(Data){
+			$scope.homeData.contentData = Data;
+	    });
+	    $scope.GetContentData();
+	}
+
+	$scope.selectedType = function(list){
+
+		if (list.id == "Today") {
+			$scope.GetContentData();
+		}else{
+			GetData($http,"theme/" + list.id,function(Data){
+				$scope.homeData.contentData = Data;
+				for (var i = 0; i < $scope.homeData.contentData.stories.length; i++) {
+					$scope.homeData.contentData.stories[i].index = i;
+				}
+				$scope.$apply();
+	    	});
+		}
+	}
+
+
+  	$scope.setData();
+  	setTimeout(function() {$scope.GetHeaderData();}, 500);
+  	setTimeout(function() {$scope.GetContentData();}, 1500);
     
     
 
@@ -60,5 +121,5 @@ angular.module('starter.controllers', ['ionic'])
 
 // pageOne
 .controller("pageOneCtrl",function($scope, $state, $stateParams) {
-	
+	$state.go("home");
 })
