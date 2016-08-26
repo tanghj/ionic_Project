@@ -30,14 +30,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 // home
 .state('home', {
       url:'/home',
+      cache:false,
       templateUrl: "module/home.html",
       controller: 'homeCtrl'
     })
 // pageOne
-.state('pageOne', {
-      url:'/home/pageOne/:receiveObj',
-      templateUrl: "module/pageOne.html",
-      controller: 'pageOneCtrl'
+.state('details', {
+      url:'/home/details/:contentId/:contentType/:contentDate/:contentDateNum',
+      cache:false,
+      templateUrl: "module/details.html",
+      controller: 'detailsCtrl'
     })
 ;
 })
