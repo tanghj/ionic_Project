@@ -211,3 +211,34 @@ function addLoadEvent(func) {
 }
 
 
+
+function app_alert(message,title,buttonName,callback){
+    if(title == null){
+        title = "提示";
+    }
+    if(buttonName == null){
+        buttonName = "确 定";
+    }
+    try{
+        navigator.notification.alert(
+            message, 
+            callback, 
+            title,  
+            buttonName 
+        );
+    }catch(e){
+        console.log(e);
+        alert(message);
+    }
+}
+
+var myNotice = function(msg, ionicLoading,timeout, prev, post){
+    ionicLoading.show({template:msg});
+    //$timeout(function(){prev && prev();$ionicLoading.hide();post && post();}, timeout || 1500);
+
+    setTimeout(function() {prev && prev();ionicLoading.hide();post && post();}, 1500);
+
+    return false;
+  }
+
+

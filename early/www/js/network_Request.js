@@ -34,16 +34,18 @@
             console.log(mydata);            
     });*/
 
-function GetData(http,target,copyData){
+function GetData(http,ionicLoading,target,copyData){
+	ionicLoading.show();
   	var url = "http://news-at.zhihu.com/api/4/" + target;
   	console.log("请求地址" + url);
   	tempData = undefined;
 	http.get(url)
 	    .then(function(mycallback){
 	        tempData = mycallback.data;
-	             
 	});
 	setTimeout(function() {
+		console.log(tempData);
 		copyData(tempData);
+		ionicLoading.hide();
 	}, 500);
 }
