@@ -117,8 +117,6 @@ angular.module('starter.controllers', ['ionic'])
 					$scope.homeData.contentData.stories[i].index = i;
 				}
 				$scope.homeData.showTitle = $scope.homeData.contentData.date;
-				$scope.homeData.contentDate = nextDate;
-				$scope.homeData.contentDateNum = selectDate;
 				$scope.$apply();
 				$ionicScrollDelegate.$getByHandle('homeScroll').scrollTop();
 		    });
@@ -157,8 +155,6 @@ angular.module('starter.controllers', ['ionic'])
 				$scope.homeData.contentData.stories[i].index = i;
 			}
 			$scope.homeData.showTitle = $scope.homeData.contentData.date;
-			$scope.homeData.contentDate = TempDate;
-			$scope.homeData.contentDateNum = selectDate;
 			$scope.$apply();
 			$ionicScrollDelegate.$getByHandle('homeScroll').scrollTop();
 	    });
