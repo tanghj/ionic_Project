@@ -36,7 +36,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     })
 // pageOne
 .state('details', {
-      url:'/home/details/:contentId/:contentType/:contentDate/:contentDateNum',
+      url:'/home/details/:contentId/:contentType/:contentDateNum',
       cache:false,
       templateUrl: "module/details.html",
       controller: 'detailsCtrl'

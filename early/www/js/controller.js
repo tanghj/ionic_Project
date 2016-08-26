@@ -15,7 +15,6 @@ angular.module('starter.controllers', ['ionic'])
 			"contentData" : "",
 			"showTitle": "",
 			"contentType":"Today",
-			"contentDate":"",
 			"contentDateNum":""
 		};
 		$scope.slideIndex = 1;
@@ -177,9 +176,31 @@ angular.module('starter.controllers', ['ionic'])
 			"contentType":$stateParams.contentType,
 			"contentData":"",
 			"articleList":"",
-			"contentDate":$stateParams.contentDate,
 			"contentDateNum":$stateParams.contentDateNum
 		};
+
+		
+
+		if ($scope.detailsData.contentType == "Today") {
+			var DateYears = $scope.detailsData.contentDateNum.substr(0, 4);
+	  		var DateMonth = $scope.detailsData.contentDateNum.substr(4,2);
+	  		var DateDay = $scope.detailsData.contentDateNum.substr(6, 2);
+	  		DateYears = DateYears + "-";
+	  		DateMonth = DateMonth + "-";
+	  		DateStr = DateYears + DateMonth + DateDay;
+	  		var TempDate = new Date(DateStr);
+	  		var TempDate2 = new Date(TempDate.getTime() + 24*60*60*1000);
+	  		var selectDate = TempDate2.toISOString();//前一天
+	        selectDate     = selectDate.substring(0,10);
+	        selectDate     = selectDate.replace(/(日)/g,"");
+	        selectDate     = selectDate.replace(/(月)/g,"");
+	        selectDate     = selectDate.replace(/(年)/g,"");
+	        selectDate     = selectDate.replace(/(-)/g,"");
+	        selectDate     = selectDate.replace(/\//g,"");
+	        $scope.GetBeforeDate = selectDate;
+		}else{
+			
+		}
 	}
 
 	$scope.GetContentData = function(){
@@ -191,10 +212,33 @@ angular.module('starter.controllers', ['ionic'])
 
 		//获取文章列表
 		setTimeout(function() {
+			//判断是主题日报还是默认日报
 			if ($scope.detailsData.contentType == "Today") {
-				GetData($http,$ionicLoading,"news/latest",function(Data){
-					$scope.detailsData.articleList = Data;
-			    });
+				//判断是默认日报还是之前日报
+		  		var NowDate = new Date();
+				var DateStr = $scope.detailsData.contentDateNum;
+				var DateYears = DateStr.substr(0, 4);
+				var DateMonth = DateStr.substr(4,2);
+				var DateDay = DateStr.substr(6, 2);
+				DateYears = DateYears + "-";
+				DateMonth = DateMonth + "-";
+				DateStr = DateYears + DateMonth + DateDay;
+				var ContrastDate = new Date(DateStr);
+
+		  		if (NowDate.getFullYear() == ContrastDate.getFullYear() &&
+		  			NowDate.getMonth() == ContrastDate.getMonth() &&
+		  			NowDate.getDate() == ContrastDate.getDate() ||
+		  			ContrastDate == "" ||!ContrastDate) {
+		  			GetData($http,$ionicLoading,"news/latest",function(Data){
+						$scope.detailsData.articleList = Data;
+				    });
+		  		}else{
+		  			GetData($http,$ionicLoading,"news/before/" + $scope.GetBeforeDate,function(Data){
+						$scope.detailsData.articleList = Data;
+				    });
+		  		}
+				
+
 			}else{
 				GetData($http,$ionicLoading,"theme/" + $scope.detailsData.contentType,function(Data){
 					$scope.detailsData.articleList = Data;
@@ -207,7 +251,6 @@ angular.module('starter.controllers', ['ionic'])
 
 	$scope.onDragRight = function(){
 		console.log("右边->");
-		//console.log($scope.detailsData.articleList.stories[0].id);
 		//判断是否是最新日报
 		if ($scope.detailsData.articleList.stories[0].id == $scope.detailsData.contentId) {
 			myNotice("已经是第一篇了。",$ionicLoading);
@@ -228,6 +271,7 @@ angular.module('starter.controllers', ['ionic'])
 					$scope.detailsData.contentData = Data;
 					$scope.$apply();
 			    });
+
 			}, 500);
 		}
 	}
@@ -259,7 +303,7 @@ angular.module('starter.controllers', ['ionic'])
 
 
 	$scope.setData();
-  	setTimeout(function() {$scope.GetContentData();}, 500);
+  	setTimeout(function() {$scope.GetContentData();}, 1000);
 })
 
 
