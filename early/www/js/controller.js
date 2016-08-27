@@ -27,9 +27,15 @@ angular.module('starter.controllers', ['ionic'])
     			"name":"今日日报",
     			"id":"Today"
     		})
+    		//默认选择的type
+	    	setTimeout(function() {
+	    		document.getElementById("今日日报").style.backgroundColor = "#E3E3E3";
+				document.getElementById("今日日报").style.color = "#FFF";
+	    	}, 500);
+	    	
+
     		$scope.$apply();    		
 	    });
-
 	}
 
 	$scope.GetContentData = function(){
@@ -63,6 +69,20 @@ angular.module('starter.controllers', ['ionic'])
 				$ionicScrollDelegate.$getByHandle('homeScroll').scrollTop();
 				$scope.$apply();
 	    	});
+		}
+
+
+
+		//判断选择了那个tpye
+		var obj = event.srcElement;
+		var selectDivId = ["今日日报" ,"日常心理学" ,"用户推荐日报" ,"电影日报" ,"不许无聊" ,"设计日报" ,"大公司日报" ,"财经日报" ,"互联网安全" ,"开始游戏" ,"音乐日报" ,"动漫日报" ,"体育日报"];
+		if (obj.id != "") {
+			for (var i = 0; i < selectDivId.length; i++) {
+				document.getElementById(selectDivId[i]).style.backgroundColor = "#FFF";
+				document.getElementById(selectDivId[i]).style.color = "#000";
+			}
+			obj.style.backgroundColor = "#E3E3E3";
+			obj.style.color = "#FFF";
 		}
 	}
 
@@ -159,7 +179,6 @@ angular.module('starter.controllers', ['ionic'])
 	    });
   	}
 
-  	
 
 
 
