@@ -31,10 +31,10 @@ angular.module('starter.controllers', ['ionic'])
 	    	setTimeout(function() {
 	    		document.getElementById("今日日报").style.backgroundColor = "#E3E3E3";
 				document.getElementById("今日日报").style.color = "#FFF";
+	    		document.getElementById("keepDiv").style.backgroundColor = "#E3E3E3";
 	    	}, 500);
-	    	
 
-    		$scope.$apply();    		
+    		//$scope.$apply();    		
 	    });
 	}
 
@@ -250,10 +250,12 @@ angular.module('starter.controllers', ['ionic'])
 		  			ContrastDate == "" ||!ContrastDate) {
 		  			GetData($http,$ionicLoading,"news/latest",function(Data){
 						$scope.detailsData.articleList = Data;
+						document.getElementById("myIframe").src = $scope.detailsData.contentData.share_url;
 				    });
 		  		}else{
 		  			GetData($http,$ionicLoading,"news/before/" + $scope.GetBeforeDate,function(Data){
 						$scope.detailsData.articleList = Data;
+						document.getElementById("myIframe").src = $scope.detailsData.contentData.share_url;
 				    });
 		  		}
 				
@@ -261,6 +263,7 @@ angular.module('starter.controllers', ['ionic'])
 			}else{
 				GetData($http,$ionicLoading,"theme/" + $scope.detailsData.contentType,function(Data){
 					$scope.detailsData.articleList = Data;
+					document.getElementById("myIframe").src = $scope.detailsData.contentData.share_url;
 		    	});
 			}
 		}, 500);
@@ -288,6 +291,7 @@ angular.module('starter.controllers', ['ionic'])
 				GetData($http,$ionicLoading,"news/" + TempID ,function(Data){
 					$scope.detailsData.contentId = TempID;
 					$scope.detailsData.contentData = Data;
+					document.getElementById("myIframe").src = $scope.detailsData.contentData.share_url;
 					$scope.$apply();
 			    });
 
@@ -313,6 +317,7 @@ angular.module('starter.controllers', ['ionic'])
 				GetData($http,$ionicLoading,"news/" + TempID ,function(Data){
 					$scope.detailsData.contentId = TempID;
 					$scope.detailsData.contentData = Data;
+					document.getElementById("myIframe").src = $scope.detailsData.contentData.share_url;
 					$scope.$apply();
 			    });
 			}, 500);
